@@ -25565,6 +25565,7 @@ _convergencelabs_ace_collab_ext__WEBPACK_IMPORTED_MODULE_1__.AceMultiCursorManag
     var doc = session.getDocument();
     var selection = session.getSelection();
     var cursorManager = new _convergencelabs_ace_collab_ext__WEBPACK_IMPORTED_MODULE_1__.AceMultiCursorManager(session);
+    var selectionManager = new _convergencelabs_ace_collab_ext__WEBPACK_IMPORTED_MODULE_1__.AceMultiSelectionManager(session);
     session.setMode('ace/mode/javascript');
     editor.setFontSize('22px'); //Editor  events
 

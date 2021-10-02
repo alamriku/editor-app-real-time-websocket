@@ -24,7 +24,7 @@
             const doc = session.getDocument();
             const selection = session.getSelection();
             const cursorManager = new AceMultiCursorManager(session);
-
+            const selectionManager = new AceMultiSelectionManager(session);
             session.setMode('ace/mode/javascript');
             editor.setFontSize('22px');
 
