@@ -25548,6 +25548,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+ // making our own hasCursor method for checking a cursor is added or not
+
+_convergencelabs_ace_collab_ext__WEBPACK_IMPORTED_MODULE_1__.AceMultiCursorManager.prototype.hasCursor = function (cursorId) {
+  return this._cursors.hasOwnProperty(cursorId);
+};
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['user'],
@@ -25560,6 +25565,7 @@ __webpack_require__.r(__webpack_exports__);
     var editor = ace_builds__WEBPACK_IMPORTED_MODULE_0___default().edit('editor');
     var session = editor.getSession();
     var doc = session.getDocument();
+    var selection = session.getSelection();
     var cursorManager = new _convergencelabs_ace_collab_ext__WEBPACK_IMPORTED_MODULE_1__.AceMultiCursorManager(session);
     session.setMode('ace/mode/javascript');
     editor.setFontSize('22px'); //Editor  events
@@ -25583,6 +25589,12 @@ __webpack_require__.r(__webpack_exports__);
     });
     editor.on('blur', function () {
       channel.whisper('remove-cursor', _this.user.id);
+    });
+    selection.on('changeCursor', function () {
+      channel.whisper('change-cursor', {
+        position: editor.getCursorPosition(),
+        userId: _this.user.id
+      });
     }); //WebSocket events
 
     channel.listenForWhisper('typing', function (data) {
@@ -25605,6 +25617,14 @@ __webpack_require__.r(__webpack_exports__);
     });
     channel.listenForWhisper('remove-cursor', function (userId) {
       cursorManager.removeCursor("cursor-".concat(userId));
+    });
+    channel.listenForWhisper('change-cursor', function (_ref2) {
+      var position = _ref2.position,
+          userId = _ref2.userId;
+
+      if (cursorManager.hasCursor("cursor-".concat(userId))) {
+        cursorManager.setCursor("cursor-".concat(userId), position);
+      }
     });
   }
 });

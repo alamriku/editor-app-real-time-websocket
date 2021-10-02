@@ -10,6 +10,11 @@
     import 'ace-builds/webpack-resolver';
     import 'ace-builds/src-noconflict/mode-javascript';
     import '@convergencelabs/ace-collab-ext/dist/css/ace-collab-ext.min.css'
+
+    // making our own hasCursor method for checking a cursor is added or not
+    AceMultiCursorManager.prototype.hasCursor = function(cursorId){
+        return this._cursors.hasOwnProperty(cursorId)
+    }
     export default {
         props: [
             'user'
@@ -19,7 +24,7 @@
             const editor = ace.edit('editor');
             const session = editor.getSession();
             const doc = session.getDocument();
-
+            const selection = session.getSelection();
             const cursorManager = new AceMultiCursorManager(session);
 
             session.setMode('ace/mode/javascript');
@@ -48,6 +53,13 @@
                 channel.whisper('remove-cursor', this.user.id)
             })
 
+            selection.on('changeCursor', () => {
+                channel.whisper('change-cursor', {
+                    position: editor.getCursorPosition(),
+                    userId: this.user.id,
+                })
+            })
+
             //WebSocket events
             channel.listenForWhisper('typing', (data) => {
                 switch (data.action) {
@@ -68,6 +80,12 @@
 
             channel.listenForWhisper('remove-cursor', (userId) => {
                 cursorManager.removeCursor(`cursor-${userId}`);
+            })
+
+            channel.listenForWhisper('change-cursor', ({position, userId}) => {
+                if(cursorManager.hasCursor(`cursor-${userId}`)){
+                    cursorManager.setCursor(`cursor-${userId}`, position);
+                }
             })
         }
     }
