@@ -1,12 +1,10 @@
 <template>
-    <div id="editor">
-        console.log('hellow world');
-    </div>
+    <div id="editor">console.log('hellow world');</div>
 </template>
 
 <script>
     import ace from 'ace-builds';
-    import { AceMultiCursorManager } from '@convergencelabs/ace-collab-ext';
+    import { AceMultiCursorManager, AceMultiSelectionManager } from '@convergencelabs/ace-collab-ext';
     import 'ace-builds/webpack-resolver';
     import 'ace-builds/src-noconflict/mode-javascript';
     import '@convergencelabs/ace-collab-ext/dist/css/ace-collab-ext.min.css'

@@ -25542,8 +25542,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 
 
@@ -77103,7 +77101,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { attrs: { id: "editor" } }, [
-    _vm._v("\n    console.log('hellow world');\n")
+    _vm._v("console.log('hellow world');")
   ])
 }
 var staticRenderFns = []
