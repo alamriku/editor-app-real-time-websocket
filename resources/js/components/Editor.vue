@@ -9,8 +9,11 @@
     import { AceMultiCursorManager } from '@convergencelabs/ace-collab-ext';
     import 'ace-builds/webpack-resolver';
     import 'ace-builds/src-noconflict/mode-javascript';
-    import '@convergencelabs/ace-collab-ext/css/ace-collab-ext.css'
+    import '@convergencelabs/ace-collab-ext/dist/css/ace-collab-ext.min.css'
     export default {
+        props: [
+            'user'
+        ],
         mounted() {
             const channel = window.Echo.join('editor').error((error) => { console.log(error) });
             const editor = ace.edit('editor');
@@ -29,6 +32,12 @@
                     return;
                 }
                 channel.whisper('typing',data);
+            });
+
+            editor.on('focus',() => {
+                channel.whisper('add-cursor', {
+
+                })
             });
 
             //WebSocket events

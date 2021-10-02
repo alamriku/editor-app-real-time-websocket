@@ -25537,7 +25537,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var ace_builds_webpack_resolver__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(ace_builds_webpack_resolver__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var ace_builds_src_noconflict_mode_javascript__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ace-builds/src-noconflict/mode-javascript */ "./node_modules/ace-builds/src-noconflict/mode-javascript.js");
 /* harmony import */ var ace_builds_src_noconflict_mode_javascript__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(ace_builds_src_noconflict_mode_javascript__WEBPACK_IMPORTED_MODULE_3__);
-Object(function webpackMissingModule() { var e = new Error("Cannot find module '@convergencelabs/ace-collab-ext/css/ace-collab-ext.css'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
+/* harmony import */ var _convergencelabs_ace_collab_ext_dist_css_ace_collab_ext_min_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @convergencelabs/ace-collab-ext/dist/css/ace-collab-ext.min.css */ "./node_modules/@convergencelabs/ace-collab-ext/dist/css/ace-collab-ext.min.css");
 //
 //
 //
@@ -25550,6 +25550,7 @@ Object(function webpackMissingModule() { var e = new Error("Cannot find module '
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ['user'],
   mounted: function mounted() {
     var channel = window.Echo.join('editor').error(function (error) {
       console.log(error);
@@ -25568,6 +25569,9 @@ Object(function webpackMissingModule() { var e = new Error("Cannot find module '
       }
 
       channel.whisper('typing', data);
+    });
+    editor.on('focus', function () {
+      channel.whisper('add-cursor', {});
     }); //WebSocket events
 
     channel.listenForWhisper('typing', function (data) {
@@ -32578,6 +32582,30 @@ module.exports = function(a, b){
   a.prototype = new fn;
   a.prototype.constructor = a;
 };
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/@convergencelabs/ace-collab-ext/dist/css/ace-collab-ext.min.css":
+/*!**********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/@convergencelabs/ace-collab-ext/dist/css/ace-collab-ext.min.css ***!
+  \**********************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, ".ace-multi-cursor{position:absolute;pointer-events:auto;z-index:10}.ace-multi-cursor:before{content:\"\";width:6px;height:5px;display:block;background:inherit;margin-left:-2px;margin-top:-5px}.ace-multi-cursor-tooltip{position:absolute;white-space:nowrap;color:#fff;text-shadow:0 0 1px #000;opacity:1;font-size:12px;padding:2px;font-family:sans-serif;transition:opacity .5s ease-out;-webkit-transition:opacity .5s ease-out;-moz-transition:opacity .5s ease-out;-ms-transition:opacity .5s ease-out;-o-transition:opacity .5s ease-out}.ace-multi-selection{position:absolute;pointer-events:auto;z-index:10;opacity:.3}.ace-radar-view{position:relative;min-width:6px}.ace-radar-view-scroll-indicator{position:absolute;left:0;right:0;border-radius:4px;cursor:pointer;border-style:double;border-width:3px}.ace-radar-view-cursor-indicator{position:absolute;left:0;right:0;height:4px;border-radius:3px;cursor:pointer;border:1px solid #000}.ace-radar-view-wrapper{position:relative;float:left;height:100%;width:6px;margin-right:4px}", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
 
 /***/ }),
 
@@ -76567,6 +76595,36 @@ function plural(ms, n, name) {
   return Math.ceil(ms / n) + ' ' + name + 's';
 }
 
+
+/***/ }),
+
+/***/ "./node_modules/@convergencelabs/ace-collab-ext/dist/css/ace-collab-ext.min.css":
+/*!**************************************************************************************!*\
+  !*** ./node_modules/@convergencelabs/ace-collab-ext/dist/css/ace-collab-ext.min.css ***!
+  \**************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_ace_collab_ext_min_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./ace-collab-ext.min.css */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/@convergencelabs/ace-collab-ext/dist/css/ace-collab-ext.min.css");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_ace_collab_ext_min_css__WEBPACK_IMPORTED_MODULE_1__["default"], options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_ace_collab_ext_min_css__WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
 
 /***/ }),
 

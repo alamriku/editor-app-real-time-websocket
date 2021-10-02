@@ -2,6 +2,6 @@
 
 @section('content')
 <div class="container">
-   <editor></editor>
+   <editor :user="{{auth()->user()}}"></editor>
 </div>
 @endsection
