@@ -17,6 +17,8 @@
             const session = editor.getSession();
             const doc = session.getDocument();
 
+            const cursorManager = new AceMultiCursorManager(session);
+
             session.setMode('ace/mode/javascript');
             editor.setFontSize('22px');
 

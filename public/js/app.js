@@ -25557,6 +25557,7 @@ Object(function webpackMissingModule() { var e = new Error("Cannot find module '
     var editor = ace_builds__WEBPACK_IMPORTED_MODULE_0___default().edit('editor');
     var session = editor.getSession();
     var doc = session.getDocument();
+    var cursorManager = new _convergencelabs_ace_collab_ext__WEBPACK_IMPORTED_MODULE_1__.AceMultiCursorManager(session);
     session.setMode('ace/mode/javascript');
     editor.setFontSize('22px'); //Editor  events
 
