@@ -26,6 +26,8 @@
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
-        "ace-builds": "^1.4.13"
+        "ace-builds": "^1.4.13",
+        "laravel-echo": "^1.11.2",
+        "socket.io-client": "^4.2.0"
     }
 }
