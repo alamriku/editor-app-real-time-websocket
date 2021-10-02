@@ -6,8 +6,10 @@
 
 <script>
     import ace from 'ace-builds';
+    import { AceMultiCursorManager } from '@convergencelabs/ace-collab-ext';
     import 'ace-builds/webpack-resolver';
     import 'ace-builds/src-noconflict/mode-javascript';
+    import '@convergencelabs/ace-collab-ext/css/ace-collab-ext.css'
     export default {
         mounted() {
             const channel = window.Echo.join('editor').error((error) => { console.log(error) });
