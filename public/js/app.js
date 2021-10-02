@@ -25552,6 +25552,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['user'],
   mounted: function mounted() {
+    var _this = this;
+
     var channel = window.Echo.join('editor').error(function (error) {
       console.log(error);
     });
@@ -25571,7 +25573,16 @@ __webpack_require__.r(__webpack_exports__);
       channel.whisper('typing', data);
     });
     editor.on('focus', function () {
-      channel.whisper('add-cursor', {});
+      channel.whisper('add-cursor', {
+        user: {
+          id: _this.user.id,
+          name: _this.user.name
+        },
+        position: editor.getCursorPosition()
+      });
+    });
+    editor.on('blur', function () {
+      channel.whisper('remove-cursor', _this.user.id);
     }); //WebSocket events
 
     channel.listenForWhisper('typing', function (data) {
@@ -25586,6 +25597,14 @@ __webpack_require__.r(__webpack_exports__);
             end: data.end
           });
       }
+    });
+    channel.listenForWhisper('add-cursor', function (_ref) {
+      var user = _ref.user,
+          position = _ref.position;
+      cursorManager.addCursor("cursor-".concat(user.id), user.name, 'green', position);
+    });
+    channel.listenForWhisper('remove-cursor', function (userId) {
+      cursorManager.removeCursor("cursor-".concat(userId));
     });
   }
 });
@@ -32626,7 +32645,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n#editor {\n    height: 500px;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n#editor {\n    height: 500px;\n}\n.remote-cursor .ace-multi-cursor-tooltip{\n    opacity: 1 !important;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

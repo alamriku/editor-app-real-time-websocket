@@ -36,9 +36,17 @@
 
             editor.on('focus',() => {
                 channel.whisper('add-cursor', {
-
+                    user: {
+                        id: this.user.id,
+                        name: this.user.name,
+                    },
+                    position: editor.getCursorPosition()
                 })
             });
+
+            editor.on('blur', () => {
+                channel.whisper('remove-cursor', this.user.id)
+            })
 
             //WebSocket events
             channel.listenForWhisper('typing', (data) => {
@@ -52,7 +60,14 @@
                             end: data.end
                         });
                 }
+            })
 
+            channel.listenForWhisper('add-cursor', ({user, position}) => {
+                cursorManager.addCursor(`cursor-${user.id}`, user.name,'green',position);
+            })
+
+            channel.listenForWhisper('remove-cursor', (userId) => {
+                cursorManager.removeCursor(`cursor-${userId}`);
             })
         }
     }
@@ -61,5 +76,8 @@
 <style>
     #editor {
         height: 500px;
+    }
+    .remote-cursor .ace-multi-cursor-tooltip{
+        opacity: 1 !important;
     }
 </style>
