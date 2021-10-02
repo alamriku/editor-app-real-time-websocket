@@ -25538,6 +25538,27 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var ace_builds_src_noconflict_mode_javascript__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ace-builds/src-noconflict/mode-javascript */ "./node_modules/ace-builds/src-noconflict/mode-javascript.js");
 /* harmony import */ var ace_builds_src_noconflict_mode_javascript__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(ace_builds_src_noconflict_mode_javascript__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _convergencelabs_ace_collab_ext_dist_css_ace_collab_ext_min_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @convergencelabs/ace-collab-ext/dist/css/ace-collab-ext.min.css */ "./node_modules/@convergencelabs/ace-collab-ext/dist/css/ace-collab-ext.min.css");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e2) { throw _e2; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e3) { didErr = true; err = _e3; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -25550,14 +25571,54 @@ __webpack_require__.r(__webpack_exports__);
 
 _convergencelabs_ace_collab_ext__WEBPACK_IMPORTED_MODULE_1__.AceMultiCursorManager.prototype.hasCursor = function (cursorId) {
   return this._cursors.hasOwnProperty(cursorId);
+}; // making our own hasSelection method for checking a text is full selected is added or not
+
+
+_convergencelabs_ace_collab_ext__WEBPACK_IMPORTED_MODULE_1__.AceMultiSelectionManager.prototype.hasSelection = function (selectionId) {
+  return this._selections.hasOwnProperty(selectionId);
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['user'],
+  data: function data() {
+    return {
+      users: []
+    };
+  },
   mounted: function mounted() {
     var _this = this;
 
-    var channel = window.Echo.join('editor').error(function (error) {
+    var channel = window.Echo.join('editor').here(function (users) {
+      _this.users = users.filter(function (user) {
+        // listing all active users.
+        return user.id != _this.user.id;
+      });
+    }).joining(function (user) {
+      // adding joined user to users list
+      _this.users.push(user);
+    }).leaving(function (user) {
+      // kicking out the logout users from users list so that active users list are consistance
+      var _iterator = _createForOfIteratorHelper(_this.users.entries()),
+          _step;
+
+      try {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+          var _step$value = _slicedToArray(_step.value, 2),
+              index = _step$value[0],
+              u = _step$value[1];
+
+          if (u.id === user.id) {
+            _this.users.splice(index, 1);
+
+            break;
+          }
+        }
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
+      }
+    }).error(function (error) {
       console.log(error);
     });
     var editor = ace_builds__WEBPACK_IMPORTED_MODULE_0___default().edit('editor');
@@ -25566,6 +25627,10 @@ _convergencelabs_ace_collab_ext__WEBPACK_IMPORTED_MODULE_1__.AceMultiCursorManag
     var selection = session.getSelection();
     var cursorManager = new _convergencelabs_ace_collab_ext__WEBPACK_IMPORTED_MODULE_1__.AceMultiCursorManager(session);
     var selectionManager = new _convergencelabs_ace_collab_ext__WEBPACK_IMPORTED_MODULE_1__.AceMultiSelectionManager(session);
+
+    var _ace$require = ace_builds__WEBPACK_IMPORTED_MODULE_0___default().require('ace/range'),
+        Range = _ace$require.Range;
+
     session.setMode('ace/mode/javascript');
     editor.setFontSize('22px'); //Editor  events
 
@@ -25593,6 +25658,15 @@ _convergencelabs_ace_collab_ext__WEBPACK_IMPORTED_MODULE_1__.AceMultiCursorManag
       channel.whisper('change-cursor', {
         position: editor.getCursorPosition(),
         userId: _this.user.id
+      });
+    });
+    selection.on('changeSelection', function () {
+      channel.whisper('change-selection', {
+        user: {
+          id: _this.user.id,
+          name: _this.user.name
+        },
+        ranges: selection.getAllRanges()
       });
     }); //WebSocket events
 
@@ -25623,6 +25697,19 @@ _convergencelabs_ace_collab_ext__WEBPACK_IMPORTED_MODULE_1__.AceMultiCursorManag
 
       if (cursorManager.hasCursor("cursor-".concat(userId))) {
         cursorManager.setCursor("cursor-".concat(userId), position);
+      }
+    });
+    channel.listenForWhisper('change-selection', function (_ref3) {
+      var user = _ref3.user,
+          ranges = _ref3.ranges;
+      ranges = ranges.map(function (range) {
+        return new Range(range.start.row, range.start.column, range.end.row, range.end.column);
+      });
+
+      if (selectionManager.hasSelection("selection-".concat(user.id))) {
+        selectionManager.setSelection("selection-".concat(user.id), ranges);
+      } else {
+        selectionManager.addSelection("selection-".concat(user.id), user.name, 'green', ranges);
       }
     });
   }
@@ -77101,8 +77188,20 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { attrs: { id: "editor" } }, [
-    _vm._v("console.log('hellow world');")
+  return _c("div", [
+    _c("h3", [_vm._v("Active User(s) - (" + _vm._s(_vm.users.length) + ")")]),
+    _vm._v(" "),
+    _c(
+      "ul",
+      _vm._l(_vm.users, function(user) {
+        return _c("li", [_vm._v(_vm._s(user.name))])
+      }),
+      0
+    ),
+    _vm._v(" "),
+    _c("div", { attrs: { id: "editor" } }, [
+      _vm._v("console.log('hellow world');")
+    ])
   ])
 }
 var staticRenderFns = []
